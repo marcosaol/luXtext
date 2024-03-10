@@ -10,6 +10,7 @@ menu_ = Menu_(window = root, i = 0)
 root.title("LuxText")
 root.resizable(True, True)
 root.state("zoomed")
+root.iconbitmap("imgs/Lx.ico")
 
 largura = 800
 altura = 500
@@ -24,7 +25,7 @@ arquivo = Menu(menubar, tearoff = 0)
 menubar.add_cascade(label ='Arquivo', menu = arquivo) 
 arquivo.add_command(label ='Novo arquivo', command = menu_.Novo_arquivo) 
 arquivo.add_command(label ='Abrir', command = menu_.Abrir) 
-arquivo.add_command(label ='Salvar', command = menu_.Salvar) 
+arquivo.add_command(label ='Salvar', command = menu_.Salvar)
 arquivo.add_separator() 
 arquivo.add_command(label ='Fechar', command = menu_.Fechar)
 arquivo.add_command(label ='Sair', command = root.destroy) 
