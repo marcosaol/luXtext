@@ -1,11 +1,11 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter.ttk import * 
+from tkinter.ttk import *
 from definicoes import Menu_
 
 root = Tk()
 
-menu_ = Menu_(window = root)
+menu_ = Menu_(window = root, i = 0)
 
 root.title("LuxText")
 root.resizable(True, True)
@@ -22,16 +22,17 @@ menubar = Menu(root)
 
 arquivo = Menu(menubar, tearoff = 0) 
 menubar.add_cascade(label ='Arquivo', menu = arquivo) 
-arquivo.add_command(label ='Novo arquivo', command = None) 
+arquivo.add_command(label ='Novo arquivo', command = menu_.Novo_arquivo) 
 arquivo.add_command(label ='Abrir', command = None) 
 arquivo.add_command(label ='Salvar', command = None) 
 arquivo.add_separator() 
+arquivo.add_command(label ='Fechar', command = None)
 arquivo.add_command(label ='Sair', command = root.destroy) 
   
  
 editar = Menu(menubar, tearoff = 0) 
 menubar.add_cascade(label ='Editar', menu = editar) 
-editar.add_command(label ='Recorta', command = None) 
+editar.add_command(label ='Recortar', command = None) 
 editar.add_command(label ='Copiar', command = None) 
 editar.add_command(label ='Colar', command = None) 
 editar.add_command(label ='Selecionar tudo', command = None) 
