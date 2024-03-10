@@ -1,20 +1,16 @@
-import PySimpleGUI as sg
+from tkinter import *
+from tkinter import ttk
+from definicoes import Menu
 
-menu_def = [['&Arquivo', ['!&Abrir::abrirkey', '&Novo::novokey', '&Salvar::savekey']], ['&Ajuda', ['&Sobre']]]
+menu_inicial = Tk()
+menu_inicial.title("LuxText")
+menu_inicial.resizable(True, True)
+menu_inicial.state("zoomed")
 
-tab_layout1 = [[]],
+largura = 800
+altura = 500
+menu_inicial.geometry(f"{largura}x{altura}")
+menu_inicial.minsize(largura, altura)
 
-layout = [
-    [sg.TabGroup([[sg.Tab(f"{Arquivo}", tab_layout1)]])],
-    [sg.Menu(menu_def)],
-    [[sg.Text('Your window!', size=(30, 5))]],
-]
-window = sg.Window('LuxText', layout)
-
-while True:
-    event, values = window.read()
-    if event == sg.WIN_CLOSED or event == 'Cancel':
-        break
-    print('You entered ', values[0])
-
-window.close()
+menu_inicial.iconbitmap("imgs/Lx.png")
+menu_inicial.mainloop()
