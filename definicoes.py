@@ -29,3 +29,9 @@ class Menu_:
         self.area_texto.add(self.tab[self.i-1], text=f"Não salvo {self.i-1}")
         entrada = Text(self.tab[self.i-1], width=self.width,height=self.height)
         entrada.pack()
+
+    def Fechar(self):
+        self.i = self.i - 1
+        self.tab[self.i].destroy()
+        
+        

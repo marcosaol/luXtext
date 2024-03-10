@@ -26,7 +26,7 @@ arquivo.add_command(label ='Novo arquivo', command = menu_.Novo_arquivo)
 arquivo.add_command(label ='Abrir', command = None) 
 arquivo.add_command(label ='Salvar', command = None) 
 arquivo.add_separator() 
-arquivo.add_command(label ='Fechar', command = None)
+arquivo.add_command(label ='Fechar', command = menu_.Fechar)
 arquivo.add_command(label ='Sair', command = root.destroy) 
   
  
