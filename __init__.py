@@ -1,52 +1,69 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import filedialog as fd
+from tkinter.filedialog import asksaveasfile
 from tkinter.ttk import *
-from definicoes import Menu_
+import os
 
-root = Tk()
+class Menu_:
+    def __init__(self, window, i, tab = [], entrada = []):
+        self.i = i
+        self.tab = tab = []
+        self.entrada = []
+        self.window = window
+        self.area_texto = ttk.Notebook(self.window)
+        self.area_texto.pack(padx=10,pady=10)
+        self.width = window.winfo_screenwidth()
+        self.height = window.winfo_screenheight()
 
-menu_ = Menu_(window = root, i = 0)
+    def Sobre(self):
+       sobre = Toplevel(self.window)
+       sobre.title("Sobre")
+       sobre.geometry("800x500")
+       sobre_texto1 = Label(sobre, text="Bem vindo ao LuxText, seu editor de texto pensado para você!")
+       sobre_texto2 = Label(sobre, text="Implementado utilizando o Tkinter e python, versão beta 2.0")
+       sobre_texto1.pack(padx=10, pady=10,anchor="center")
+       sobre_texto2.pack(padx=10, pady=10,anchor="center")
+       sobre.iconbitmap("imgs/Lx.ico")
+       sobre.mainloop()
 
-root.title("LuxText")
-root.resizable(True, True)
-root.state("zoomed")
-root.iconbitmap("imgs/Lx.ico")
+    def Novo_arquivo(self, nome_arquivo = "Não salvo"):
+        self.nome_arquivo = nome_arquivo
+        self.i = self.i + 1
+        self.tab.append(self.i-1)
+        self.entrada.append(self.i-1)
+        self.tab[self.i-1] = Frame(self.area_texto, width=self.width, height=self.height)
+        self.tab[self.i-1].pack(fill="both", expand=1)
+        self.area_texto.add(self.tab[self.i-1], text=nome_arquivo)
+        self.entrada[self.i-1] = Text(self.tab[self.i-1], width=self.width,height=self.height)
+        self.entrada[self.i-1].pack()
+    
+    def Abrir(self):
+        self.filetypes = (
+        ('text files', '*.txt'),
+        ('All files', '*.*')
+        )
+        arquivo_aberto = fd.askopenfilename(
+        title='Abrir arquivo',
+        initialdir='/',
+        filetypes=self.filetypes)
+        self.nome_arquivo = os.path.basename(arquivo_aberto)
+        self.Novo_arquivo(self.nome_arquivo)
+        arquivo_aberto = open(arquivo_aberto, 'r')
+        texto_adicional = arquivo_aberto.read()
+        self.entrada[self.i-1].insert(END, texto_adicional)
+        arquivo_aberto.close()
 
-largura = 800
-altura = 500
-root.geometry(f"{largura}x{altura}")
-root.minsize(largura, altura)
+    def Salvar(self):
+        arquivo = fd.asksaveasfilename(filetypes=[('text files', '*.txt')], defaultextension = '.txt')
+        save = open(arquivo, 'w')
+        save.write(self.entrada[self.i-1].get(1.0, END))
+        self.nome_arquivo = os.path.basename(arquivo)
+        self.area_texto.add(self.tab[self.i-1], text=self.nome_arquivo)
+        save.close()
 
- 
-menubar = Menu(root) 
-
-
-arquivo = Menu(menubar, tearoff = 0) 
-menubar.add_cascade(label ='Arquivo', menu = arquivo) 
-arquivo.add_command(label ='Novo arquivo', command = menu_.Novo_arquivo) 
-arquivo.add_command(label ='Abrir', command = menu_.Abrir) 
-arquivo.add_command(label ='Salvar', command = menu_.Salvar)
-arquivo.add_separator() 
-arquivo.add_command(label ='Fechar', command = menu_.Fechar)
-arquivo.add_command(label ='Sair', command = root.destroy) 
-  
- 
-editar = Menu(menubar, tearoff = 0) 
-menubar.add_cascade(label ='Editar', menu = editar) 
-editar.add_command(label ='Recortar', command = None) 
-editar.add_command(label ='Copiar', command = None) 
-editar.add_command(label ='Colar', command = None) 
-editar.add_command(label ='Selecionar tudo', command = None) 
-editar.add_separator() 
-editar.add_command(label ='Achar', command = None) 
-
-configuracao = Menu(menubar, tearoff = 0) 
-menubar.add_cascade(label ='Configuração', menu = configuracao) 
-configuracao.add_command(label ='Ajuda', command = None) 
-configuracao.add_command(label ='Sobre', command = menu_.Sobre) 
-configuracao.add_separator() 
-configuracao.add_command(label ='Preferências', command = None) 
-  
-root.config(menu = menubar) 
-
-root.mainloop()
+    def Fechar(self):
+        self.i = self.i - 1
+        self.tab[self.i].destroy()
+    
+        
